@@ -1,0 +1,18 @@
+styles.css
+* {
+	box-sizing: border-box;
+}
+
+.grid {
+	position: absolute;
+	width: 570px;
+	height: 300px;
+	border: solid black 1px;
+}
+
+.block {
+	width: 100px;
+	height: 15px;
+	background-color: darkred;
+	position: absolute;
+}
