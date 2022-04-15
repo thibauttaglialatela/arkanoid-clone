@@ -1,12 +1,14 @@
 const grid = document.querySelector(".grid");
+const scoreDisplay = document.querySelector('.score');
 const blockWidth = 100;
 const blockHeight = 15;
 const gridWidth = 570;
 const gridHeight = 300;
 const ballDiameter = 10;
-let xDirection = 2;
+let xDirection = -2;
 let yDirection = 2;
 let timerId;
+let score = 0;
 
 
 const userStart = [230, 10];
@@ -118,12 +120,57 @@ timerId = setInterval(moveBall, 30);
 
 // check for collisions
 function checkforCollisions() {
-	//check for wall collisions
-	if (currentBallPos[0] >= (gridWidth - ballDiameter) || currentBallPos[1] >= (gridHeight - ballDiameter)) {
-		changeDirection()
+	//check for blocks collisions
+	for (let i = 0; i < blocks.length; i++) {
+		if (
+			(currentBallPos[0] > blocks[i].bottomLeft[0] && currentBallPos[0] < blocks[i].bottomRight[0]) &&
+			((currentBallPos[1] + ballDiameter) > blocks[i].bottomLeft[1] && currentBallPos[1] < blocks[i].topLeft[1])
+			)
+		{
+			const allBlocks = Array.from(document.querySelectorAll(".block"));
+			allBlocks[i].classList.remove('block');
+			blocks.splice(i, 1);
+			changeDirection();
+			score++;
+			scoreDisplay.innerHTML = score;
+
+			if (blocks.length === 0) {
+				scoreDisplay.innerHTML = "Well done you have completed the game";
+				clearInterval(timerId);
+				document.removeEventListener('keydown, moveUser');
+	
+			}
+		}
 	}
 
+	//check for wall collisions
+	if (currentBallPos[0] >= (gridWidth - ballDiameter) ||
+	 currentBallPos[1] >= (gridHeight - ballDiameter) ||
+	 currentBallPos[0] <= 0) {
+		changeDirection()
+	}
+	//check for Game Over
+	if (currentBallPos[1] <= 0) {
+		clearInterval(timerId);
+		scoreDisplay.innerHTML = `You lose. Your score is ${score}`
+		document.removeEventListener('keydown', moveUser);
+
+	}
+
+	//check for user collision
+	if (
+		(currentBallPos[0] > currentUserPos[0] && currentBallPos[0] < currentUserPos[0] + blockWidth) &&
+		(currentBallPos[1] > currentUserPos[1] && currentBallPos[1] < currentUserPos[1] +blockHeight)
+		) {
+		changeDirection();
+	}
+
+
+
+
 }
+
+
 
 function changeDirection() {
 	if (xDirection === 2 && yDirection === 2) {
