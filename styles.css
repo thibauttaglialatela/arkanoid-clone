@@ -5,13 +5,17 @@ styles.css
 
 body {
 	background-color: rgb(21, 50, 67);
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
+
 
 .grid {
 	position: absolute;
 	width: 570px;
 	height: 300px;
-	border: solid ghostwhite; 1px;
+	border: solid ghostwhite;
 }
 
 .block {
@@ -34,4 +38,13 @@ body {
 	border-radius: 50%;
 	background-color: snow;
 	position: absolute;
+}
+
+.start {
+	position: absolute;
+	width: fit-content;
+    height: 20px;
+    background-color: darkgoldenrod;
+    top: 350px;
+    left: 10px;
 }

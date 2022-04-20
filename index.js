@@ -4,7 +4,8 @@ const blockWidth = 100;
 const blockHeight = 15;
 const gridWidth = 570;
 const gridHeight = 300;
-const ballDiameter = 10;
+const ballDiameter = 20;
+const startButton = document.querySelector(".start");
 let xDirection = -2;
 let yDirection = 2;
 let timerId;
@@ -116,7 +117,11 @@ const moveBall = () => {
 	checkforCollisions();
 }
 
-timerId = setInterval(moveBall, 30);
+function startGame () {
+	timerId = setInterval(moveBall, 20);
+}
+
+
 
 // check for collisions
 function checkforCollisions() {
@@ -190,3 +195,5 @@ function changeDirection() {
 		return;
 	}
 }
+
+startButton.addEventListener('click', startGame);
